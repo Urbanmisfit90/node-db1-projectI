@@ -14,7 +14,8 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", md.checkAccountId, async (req, res, next) => {
   try {
-    res.json(req.account)
+    const account = await Account.getById(req.params.id)
+    res.json(account)
   } catch (err) {
     next(err)
   }
@@ -48,10 +49,10 @@ router.put(
   }
 );
 
-router.delete("/:id", md.checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
+router.delete("/:id", md.checkAccountId, async (req, res, next) => {
   try {
-    res.json("delete account");
+    await Account.deleteById(req.params.id)
+    res.json(req.account)
   } catch (err) {
     next(err);
   }
