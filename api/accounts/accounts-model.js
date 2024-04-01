@@ -17,7 +17,8 @@ const create = async account => {
 }
 
 const updateById = async (id, account) => {
-  await db('account').where('id', id).update(account)
+  // update accounts set name ='foo', budget=1000 where id=1;
+  await db('accounts').where('id', id).update(account)
   return getById(id)
 }
 

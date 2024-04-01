@@ -27,27 +27,30 @@ router.post(
   md.checkAccountNameUnique,
   async (req, res, next) => {
     try {
-      const newAccount = await Account.create(req.body)
+      const newAccount = await Account.create({ 
+        name: req.body.name.trim(),
+       budget: req.body.budget, 
+      })
       res.status(201).json(newAccount);
     } catch (err) {
       next(err);
     }
   });
 
-router.put(
-  "/:id",
-  md.checkAccountId,
-  md.checkAccountPayload,
-  async (req, res, next) => {
-    const updated = await Account.updateById(req.params.id, req.body)
-    res.json(updated)
-    try {
-      res.json("update account");
-    } catch (err) {
-      next(err);
+  router.put(
+    "/:id",
+    md.checkAccountId,
+    md.checkAccountPayload,
+    async (req, res, next) => {
+      try {
+        const updatedAccount = await Account.updateById(req.params.id, req.body)
+        res.status(200).json(updatedAccount)
+      } catch (err) {
+        next(err);
+      }
     }
-  }
-);
+  );
+  
 
 router.delete("/:id", md.checkAccountId, async (req, res, next) => {
   try {
