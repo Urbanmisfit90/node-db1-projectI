@@ -13,7 +13,11 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:id", md.checkAccountId, async (req, res, next) => {
-  res.json(req.account)
+  try {
+    res.json(req.account)
+  } catch (err) {
+    next(err)
+  }
 });
 
 router.post(
@@ -26,8 +30,7 @@ router.post(
     } catch (err) {
       next(err);
     }
-  }
-);
+  });
 
 router.put(
   "/:id",
