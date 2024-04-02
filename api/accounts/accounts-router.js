@@ -44,7 +44,7 @@ router.post(
     async (req, res, next) => {
       try {
         const updatedAccount = await Account.updateById(req.params.id, req.body)
-        res.status(200).json(updatedAccount)
+        res.json(updatedAccount)
       } catch (err) {
         next(err);
       }
